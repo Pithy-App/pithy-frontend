@@ -1,3 +1,3 @@
 document.querySelector(".authButton").addEventListener("click", function() {
-    window.location.href = "https://www.reddit.com";
+    window.location.href = window.location.pathname + "/oauth2/callback";
 });
