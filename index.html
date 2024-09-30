@@ -22,20 +22,6 @@
         </div>
     </div>
 
-    <script>
-        function loadPage() {
-            const hash = window.location.hash;
-
-            if (hash === '#/oauth2/callback') {
-                document.getElementById('content').innerHTML = '<h1>OAuth2 Callback Page</h1><p>This is a different page.</p>';
-            } else {
-                document.getElementById('content').innerHTML = '<h1>Home Page</h1><p>Welcome to the home page.</p>';
-            }
-        }
-
-        window.addEventListener('hashchange', loadPage);
-        window.addEventListener('load', loadPage);
-    </script>
     <script src="scripts.js"></script>
 </body>
 </html>
