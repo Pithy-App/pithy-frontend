@@ -1,20 +1,29 @@
-// Enable submit button only if all fields are filled correctly
 const redditUrlInput = document.getElementById('reddit-url');
-const positiveQueryInput = document.getElementById('positive-query');
-const negativeQueryInput = document.getElementById('negative-query');
+const queryList = document.getElementById('query-list');
 const submitBtn = document.getElementById('submit-btn');
+const addQueryBtn = document.getElementById('add-query-btn');
+let queryCount = 1;
 
 function checkFormValidity() {
     const isUrlValid = redditUrlInput.checkValidity();
-    const isPositiveFilled = positiveQueryInput.value.trim() !== '';
-    const isNegativeFilled = negativeQueryInput.value.trim() !== '';
+    const allQueriesFilled = Array.from(document.querySelectorAll('input[name="queries[]"]'))
+        .every(input => input.value.trim() !== '');
 
-    submitBtn.disabled = !(isUrlValid && isPositiveFilled && isNegativeFilled);
+    submitBtn.disabled = !(isUrlValid && allQueriesFilled);
 }
 
+addQueryBtn.addEventListener('click', function() {
+    queryCount++;
+    const newQuery = document.createElement('div');
+    newQuery.innerHTML = `
+        <label for="query-${queryCount}">Query ${queryCount}:</label>
+        <input type="text" id="query-${queryCount}" name="queries[]" placeholder="Enter a query" required>
+    `;
+    queryList.appendChild(newQuery);
+});
+
 redditUrlInput.addEventListener('input', checkFormValidity);
-positiveQueryInput.addEventListener('input', checkFormValidity);
-negativeQueryInput.addEventListener('input', checkFormValidity);
+queryList.addEventListener('input', checkFormValidity);
 
 submitBtn.onclick = function(event) {
     event.preventDefault();
@@ -22,12 +31,11 @@ submitBtn.onclick = function(event) {
     const urlParams = new URLSearchParams(window.location.search);
     const state = urlParams.get('state');
     const code = urlParams.get('code');
-
     const redditUrl = redditUrlInput.value;
-    const positiveQuery = positiveQueryInput.value;
-    const negativeQuery = negativeQueryInput.value;
+    const queries = Array.from(document.querySelectorAll('input[name="queries[]"]'))
+        .map(input => input.value.trim());
 
-    console.log(redditUrl, positiveQuery, negativeQuery, state, code);
+    console.log({ state, code, redditUrl, queries });
 
     // TODO: Call backend with data.
 };

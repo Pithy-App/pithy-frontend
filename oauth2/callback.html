@@ -21,13 +21,14 @@
             <form id="reddit-form">
                 <label for="reddit-url">Reddit URL:</label>
                 <input type="url" id="reddit-url" name="reddit-url" placeholder="Enter a Reddit URL" required pattern="https?://(www\.)?reddit\.com/.*">
+
+                <div id="query-list">
+                    <label for="query-1">Query 1:</label>
+                    <input type="text" id="query-1" name="queries[]" placeholder="Enter a query" required>
+                </div>
                 
-                <label for="positive-query">Positive Query:</label>
-                <input type="text" id="positive-query" name="positive-query" placeholder="Enter a positive query" required>
-                
-                <label for="negative-query">Negative Query:</label>
-                <input type="text" id="negative-query" name="negative-query" placeholder="Enter a negative query" required>
-                
+                <button type="button" id="add-query-btn">Add Query</button>
+
                 <button type="submit" id="submit-btn" disabled>Submit</button>
             </form>
         </div>
