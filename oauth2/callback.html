@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
-    <script src="../script.js" defer></script>
+    <script src="callback.js" defer></script>
 </head>
 <body>
     <nav>
@@ -18,7 +18,18 @@
 
     <div class="main">
         <div class="content">
-            
+            <form id="reddit-form">
+                <label for="reddit-url">Reddit URL:</label>
+                <input type="url" id="reddit-url" name="reddit-url" placeholder="Enter a Reddit URL" required pattern="https?://(www\.)?reddit\.com/.*">
+                
+                <label for="positive-query">Positive Query:</label>
+                <input type="text" id="positive-query" name="positive-query" placeholder="Enter a positive query" required>
+                
+                <label for="negative-query">Negative Query:</label>
+                <input type="text" id="negative-query" name="negative-query" placeholder="Enter a negative query" required>
+                
+                <button type="submit" id="submit-btn" disabled>Submit</button>
+            </form>
         </div>
     </div>
 </body>
