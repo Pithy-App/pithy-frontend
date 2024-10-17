@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="callback.js" defer></script>
 </head>
 <body>
@@ -31,6 +32,12 @@
 
                 <button type="submit" id="submit-btn" disabled>Submit</button>
             </form>
+        </div>
+
+        <div class="hidden pie">
+            <h1>Comment Categories</h1>
+            <canvas id="pie-chart"></canvas>
+            <div id="comments-container"></div>
         </div>
     </div>
 </body>
