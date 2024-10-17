@@ -34,38 +34,46 @@ queryList.addEventListener('input', checkFormValidity);
 submitBtn.onclick = async function (event) {
     event.preventDefault();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const state = urlParams.get('state');
-    const code = urlParams.get('code');
     const redditUrl = redditUrlInput.value;
     const queries = Array.from(document.querySelectorAll('input[name="queries[]"]'))
         .map(input => input.value.trim());
 
-    console.log({ state, code, redditUrl, queries });
+    const queriesObject = queries.reduce((obj, query, index) => {
+        obj[`query-${index + 1}`] = query;
+        return obj;
+    }, {});
 
-    // TODO: Replace with an actual cloud function call
-    const data = {
-        "comments": [
-            { "body": "This is a great product!", "category": "Positive" },
-            { "body": "Not what I expected.", "category": "Negative" },
-            { "body": "Delivery was fast and easy.", "category": "Positive" },
-            { "body": "Would not buy again.", "category": "Negative" },
-            { "body": "Amazing customer service.", "category": "Positive" },
-            { "body": "Okay product.", "category": "Neutral" }
-        ]
+    const payload = {
+        platform: "reddit",
+        postUrl: redditUrl,
+        queries: queriesObject
     };
 
-    // Show pie chart view
-    const content = document.querySelector('.content');
-    const pieChart = document.querySelector('.hidden');
-
-    content.classList.add('hidden');
-    content.classList.remove('content');
-    pieChart.classList.remove('hidden');
-    pieChart.classList.add('content');
-
-    await getComments(data);
+    try {
+        const data = await fetchCommentsFromAPI(payload);
+        // TODO: Uncomment
+        //await getComments(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 };
+
+async function fetchCommentsFromAPI(payload) {
+    const response = await fetch('https://bhdfgagbo8.execute-api.us-east-2.amazonaws.com/dev/processUserInput', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch data from the API');
+    }
+
+    const result = await response.json();
+    console.log('API Response:', result);
+
+    return result;
+}
 
 async function getComments(data) {
     const categoryCounts = {};
