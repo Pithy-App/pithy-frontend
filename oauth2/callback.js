@@ -44,7 +44,6 @@ function checkFormValidity() {
     }
 }
 
-
 addQueryBtn.addEventListener('click', function () {
     queryCount++;
     const newQuery = document.createElement('div');
@@ -96,14 +95,14 @@ submitBtn.onclick = async function (event) {
 
     try {
         const data = await fetchCommentsFromAPI(payload);
-        // TODO: Uncomment
-        // getComments(data);
+        getComments(data);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 };
 
 async function fetchCommentsFromAPI(payload) {
+    console.log("Fetching data from API with payload:", payload);
     const response = await fetch('https://bhdfgagbo8.execute-api.us-east-2.amazonaws.com/dev/processUserInput', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -115,15 +114,18 @@ async function fetchCommentsFromAPI(payload) {
     }
 
     const result = await response.json();
-    console.log('API Response:', result);
+    console.log('API Response:', JSON.stringify(result));
 
     return result;
 }
 
 function getComments(data) {
     const categoryCounts = {};
-    data.comments.forEach(comment => {
-        categoryCounts[comment.category] = (categoryCounts[comment.category] || 0) + 1;
+
+    data.forEach(categoryData => {
+        Object.entries(categoryData).forEach(([category, details]) => {
+            categoryCounts[category] = details.comments.length;
+        });
     });
 
     const labels = Object.keys(categoryCounts);
@@ -142,7 +144,7 @@ function getComments(data) {
             labels: labels,
             datasets: [{
                 data: counts,
-                backgroundColor: colors,
+                backgroundColor: colors.slice(0, labels.length),
             }]
         },
         options: {
@@ -163,13 +165,17 @@ function getComments(data) {
             }
         }
     });
+
+    document.querySelector('.content').classList.add('hidden');
+    document.querySelector('.pie').classList.remove('hidden');
 }
 
 function showCommentsByCategory(data, category) {
     const commentsContainer = document.getElementById('comments-container');
     commentsContainer.innerHTML = '';
 
-    const filteredComments = data.comments.filter(comment => comment.category === category);
+    const selectedCategoryData = data.find(catData => catData[category]);
+    const filteredComments = selectedCategoryData ? selectedCategoryData[category].comments : [];
 
     if (filteredComments.length === 0) {
         commentsContainer.innerHTML = '<p>No comments available for this category.</p>';
@@ -179,7 +185,7 @@ function showCommentsByCategory(data, category) {
     filteredComments.forEach(comment => {
         const commentElement = document.createElement('div');
         commentElement.className = 'comment';
-        commentElement.textContent = comment.body;
+        commentElement.textContent = comment.text;
         commentsContainer.appendChild(commentElement);
     });
 }
