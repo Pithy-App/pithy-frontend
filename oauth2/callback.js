@@ -97,7 +97,7 @@ submitBtn.onclick = async function (event) {
     try {
         const data = await fetchCommentsFromAPI(payload);
         // TODO: Uncomment
-        //await getComments(data);
+        // getComments(data);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -120,7 +120,7 @@ async function fetchCommentsFromAPI(payload) {
     return result;
 }
 
-async function getComments(data) {
+function getComments(data) {
     const categoryCounts = {};
     data.comments.forEach(comment => {
         categoryCounts[comment.category] = (categoryCounts[comment.category] || 0) + 1;
