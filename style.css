@@ -109,14 +109,48 @@ canvas {
     max-width: 600px;
     margin-bottom: 20px;
 }
+
 #comments-container {
     max-width: 600px;
     width: 100%;
 }
+
 .comment {
     background: #f1f1f1;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.query-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.query-item label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    flex: 0 0 auto;
+}
+
+.query-item input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.2s;
+    flex: 1 1 auto;
+}
+
+.query-item input[type="text"]:focus {
+    border-color: #FF5700;
+    outline: none;
 }

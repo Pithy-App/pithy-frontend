@@ -24,8 +24,12 @@
                 <input type="url" id="reddit-url" name="reddit-url" placeholder="Enter a Reddit URL" required pattern="https?://(www\.)?reddit\.com/.*">
 
                 <div id="query-list">
-                    <label for="query-1">Query 1:</label>
-                    <input type="text" id="query-1" name="queries[]" placeholder="Enter a query" required>
+                    <div class="query-item">
+                        <label for="query-summary-1">Summary 1:</label>
+                        <input type="text" id="query-summary-1" name="query-summaries[]" placeholder="Enter a one-word summary" required>
+                        <label for="query-1">Query 1:</label>
+                        <input type="text" id="query-1" name="queries[]" placeholder="Enter a query" required>
+                    </div>
                 </div>
                 
                 <button type="button" id="add-query-btn">Add Query</button>

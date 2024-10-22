@@ -11,16 +11,21 @@ let categoryPieChart = null;
 
 function checkFormValidity() {
     const isUrlValid = redditUrlInput.checkValidity();
+    const allSummariesFilled = Array.from(document.querySelectorAll('input[name="query-summaries[]"]'))
+        .every(input => input.value.trim() !== '');
     const allQueriesFilled = Array.from(document.querySelectorAll('input[name="queries[]"]'))
         .every(input => input.value.trim() !== '');
 
-    submitBtn.disabled = !(isUrlValid && allQueriesFilled);
+    submitBtn.disabled = !(isUrlValid && allSummariesFilled && allQueriesFilled);
 }
 
 addQueryBtn.addEventListener('click', function () {
     queryCount++;
     const newQuery = document.createElement('div');
+    newQuery.className = 'query-item';
     newQuery.innerHTML = `
+        <label for="query-summary-${queryCount}">Summary ${queryCount}:</label>
+        <input type="text" id="query-summary-${queryCount}" name="query-summaries[]" placeholder="Enter a one-word summary" required>
         <label for="query-${queryCount}">Query ${queryCount}:</label>
         <input type="text" id="query-${queryCount}" name="queries[]" placeholder="Enter a query" required>
     `;
@@ -35,11 +40,13 @@ submitBtn.onclick = async function (event) {
     event.preventDefault();
 
     const redditUrl = redditUrlInput.value;
+    const summaries = Array.from(document.querySelectorAll('input[name="query-summaries[]"]'))
+        .map(input => input.value.trim());
     const queries = Array.from(document.querySelectorAll('input[name="queries[]"]'))
         .map(input => input.value.trim());
 
-    const queriesObject = queries.reduce((obj, query, index) => {
-        obj[`query-${index + 1}`] = query;
+    const queriesObject = summaries.reduce((obj, summary, index) => {
+        obj[summary] = queries[index];
         return obj;
     }, {});
 
