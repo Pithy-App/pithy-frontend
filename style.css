@@ -14,9 +14,8 @@ nav {
 
 nav h1 {
     font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
     font-size: 40px;
+    font-weight: 400;
     padding-right: 10px;
 }
 
@@ -32,13 +31,13 @@ nav img {
 }
 
 .content {
-    text-align: center;
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    max-width: 600px;
+    padding: 30px;
     background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 form {
@@ -59,30 +58,29 @@ label {
 input[type="url"],
 input[type="text"] {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.2s;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input[type="url"]:focus,
 input[type="text"]:focus {
     border-color: #FF5700;
     outline: none;
+    box-shadow: 0 0 5px rgba(255, 87, 0, 0.2);
 }
 
 button {
-    background-color: #FF5700;
-    color: white;
-    border: none;
+    width: 100%;
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%;
 }
 
 button:disabled {
@@ -103,14 +101,11 @@ button:hover:not(:disabled) {
     font-weight: 800;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #333;
+    max-width: 80%;
+    margin: 0 auto 20px;
 }
 
-canvas {
-    max-width: 600px;
-    margin-bottom: 20px;
-}
-
-#comments-container {
+canvas, #comments-container {
     max-width: 600px;
     width: 100%;
 }
@@ -138,7 +133,6 @@ canvas {
     font-size: 14px;
     font-weight: 600;
     color: #555;
-    flex: 0 0 auto;
 }
 
 .query-item input[type="text"] {
@@ -147,10 +141,49 @@ canvas {
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.2s;
-    flex: 1 1 auto;
+    flex: 1;
 }
 
 .query-item input[type="text"]:focus {
     border-color: #FF5700;
     outline: none;
+}
+
+#query-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#add-query-btn, #remove-query-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+#add-query-btn {
+    background-color: #FF5700;
+    color: white;
+}
+
+#add-query-btn:hover {
+    background-color: #e14d00;
+}
+
+#remove-query-btn {
+    background-color: #ddd;
+    color: #666;
+}
+
+#remove-query-btn:not(:disabled):hover {
+    background-color: #bbb;
+    cursor: pointer;
+}
+
+#remove-query-btn:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
 }

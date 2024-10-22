@@ -2,6 +2,7 @@ const redditUrlInput = document.getElementById('reddit-url');
 const queryList = document.getElementById('query-list');
 const submitBtn = document.getElementById('submit-btn');
 const addQueryBtn = document.getElementById('add-query-btn');
+const removeQueryBtn = document.getElementById('remove-query-btn');
 let queryCount = 1;
 
 const colors = ['#4caf50', '#f44336', '#ff9800', '#2196f3', '#9c27b0'];
@@ -19,6 +20,10 @@ function checkFormValidity() {
     submitBtn.disabled = !(isUrlValid && allSummariesFilled && allQueriesFilled);
 }
 
+function updateRemoveButtonState() {
+    removeQueryBtn.disabled = queryCount <= 1;
+}
+
 addQueryBtn.addEventListener('click', function () {
     queryCount++;
     const newQuery = document.createElement('div');
@@ -31,10 +36,22 @@ addQueryBtn.addEventListener('click', function () {
     `;
     queryList.appendChild(newQuery);
     checkFormValidity();
+    updateRemoveButtonState();
+});
+
+removeQueryBtn.addEventListener('click', function () {
+    if (queryCount > 1) {
+        queryList.lastElementChild.remove();
+        queryCount--;
+        checkFormValidity();
+        updateRemoveButtonState();
+    }
 });
 
 redditUrlInput.addEventListener('input', checkFormValidity);
 queryList.addEventListener('input', checkFormValidity);
+
+updateRemoveButtonState();
 
 submitBtn.onclick = async function (event) {
     event.preventDefault();
