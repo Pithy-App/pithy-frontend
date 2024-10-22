@@ -76,6 +76,9 @@ updateRemoveButtonState();
 submitBtn.onclick = async function (event) {
     event.preventDefault();
 
+    document.querySelector('.content').classList.add('hidden');
+    document.querySelector('.loading').classList.remove('hidden');
+
     const redditUrl = redditUrlInput.value;
     const summaries = Array.from(document.querySelectorAll('input[name="query-summaries[]"]'))
         .map(input => input.value.trim());
@@ -98,6 +101,8 @@ submitBtn.onclick = async function (event) {
         getComments(data);
     } catch (error) {
         console.error('Error fetching data:', error);
+    } finally {
+        document.querySelector('.loading').classList.add('hidden');
     }
 };
 
@@ -121,7 +126,6 @@ async function fetchCommentsFromAPI(payload) {
 
 function getComments(data) {
     const categoryCounts = {};
-
     data.forEach(categoryData => {
         Object.entries(categoryData).forEach(([category, details]) => {
             categoryCounts[category] = details.comments.length;
@@ -158,15 +162,21 @@ function getComments(data) {
             onClick: (event, elements) => {
                 if (elements.length > 0) {
                     const clickedIndex = elements[0].index;
-                    selectedCategory = labels[clickedIndex];
-                    updateChartColors(labels, selectedCategory);
+                    const clickedLabel = labels[clickedIndex];
+
+                    if (selectedCategory === clickedLabel) {
+                        selectedCategory = null;
+                        updateChartColors(labels, selectedCategory);
+                    } else {
+                        selectedCategory = clickedLabel;
+                        updateChartColors(labels, selectedCategory);
+                    }
                     showCommentsByCategory(data, selectedCategory);
                 }
             }
         }
     });
 
-    document.querySelector('.content').classList.add('hidden');
     document.querySelector('.pie').classList.remove('hidden');
 }
 

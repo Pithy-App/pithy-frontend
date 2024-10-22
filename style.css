@@ -92,10 +92,6 @@ button:hover:not(:disabled) {
     background-color: #e14d00;
 }
 
-.hidden {
-    display: none;
-}
-
 .pie {
     font-size: 18px;
     font-weight: 800;
@@ -106,6 +102,7 @@ button:hover:not(:disabled) {
 }
 
 canvas, #comments-container {
+    height: 100px;
     max-width: 600px;
     width: 100%;
 }
@@ -189,4 +186,17 @@ button#submit-btn:not(:disabled) {
 button#submit-btn:not(:disabled):hover {
     background-color: #e14d00;
     cursor: pointer;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
 }
