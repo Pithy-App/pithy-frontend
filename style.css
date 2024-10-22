@@ -164,26 +164,29 @@ canvas, #comments-container {
     border: none;
 }
 
-#add-query-btn {
+#add-query-btn, 
+#remove-query-btn:not(:disabled) {
     background-color: #FF5700;
     color: white;
 }
 
-#add-query-btn:hover {
-    background-color: #e14d00;
-}
-
-#remove-query-btn {
-    background-color: #ddd;
-    color: #666;
-}
-
+#add-query-btn:hover, 
 #remove-query-btn:not(:disabled):hover {
-    background-color: #bbb;
-    cursor: pointer;
+    background-color: #e14d00;
 }
 
 #remove-query-btn:disabled {
     background-color: #f0f0f0;
+    color: #666;
     cursor: not-allowed;
+}
+
+button#submit-btn:not(:disabled) {
+    background-color: #FF5700;
+    color: white;
+}
+
+button#submit-btn:not(:disabled):hover {
+    background-color: #e14d00;
+    cursor: pointer;
 }

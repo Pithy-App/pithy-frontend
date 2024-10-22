@@ -10,6 +10,15 @@ const greyedOutColor = '#d3d3d3';
 
 let categoryPieChart = null;
 
+function updateRemoveButtonState() {
+    removeQueryBtn.disabled = queryCount <= 1;
+    if (!removeQueryBtn.disabled) {
+        removeQueryBtn.classList.remove('disabled');
+    } else {
+        removeQueryBtn.classList.add('disabled');
+    }
+}
+
 function checkFormValidity() {
     const isUrlValid = redditUrlInput.checkValidity();
     const allSummariesFilled = Array.from(document.querySelectorAll('input[name="query-summaries[]"]'))
@@ -17,12 +26,24 @@ function checkFormValidity() {
     const allQueriesFilled = Array.from(document.querySelectorAll('input[name="queries[]"]'))
         .every(input => input.value.trim() !== '');
 
-    submitBtn.disabled = !(isUrlValid && allSummariesFilled && allQueriesFilled);
+    const isFormValid = isUrlValid && allSummariesFilled && allQueriesFilled;
+
+    submitBtn.disabled = !isFormValid;
+    removeQueryBtn.disabled = queryCount <= 1;
+
+    if (isFormValid) {
+        submitBtn.classList.remove('disabled');
+    } else {
+        submitBtn.classList.add('disabled');
+    }
+
+    if (!removeQueryBtn.disabled) {
+        removeQueryBtn.classList.remove('disabled');
+    } else {
+        removeQueryBtn.classList.add('disabled');
+    }
 }
 
-function updateRemoveButtonState() {
-    removeQueryBtn.disabled = queryCount <= 1;
-}
 
 addQueryBtn.addEventListener('click', function () {
     queryCount++;
